@@ -7,7 +7,7 @@
 
 # import
 from textblob import TextBlob
-import twint, os
+import twint, os, csv
 
 # clear screen
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
@@ -36,15 +36,32 @@ count = 1
 pos_count = 0
 neg_count = 0
 
-# loop through tweets
-for tweet in tweets:
+# csv
+with open('data.csv', 'x', encoding='UTF8') as f:
+  # writer
+  wr = csv.writer(f)
+  wr.writerow(["tweet", "sentiment"])
 
-  # get sentiment
-  if TextBlob(tweet.tweet).sentiment.polarity > 0: out = "Positive"; pos_count += 1
-  else: out = "Negative"; neg_count += 1
+  # loop through tweets
+  for tweet in tweets:
+    # list
+    l = []
 
-  print("["+ str(count) + "] " + tweet.tweet + "  :: " + out + "\n")
-  count += 1
+    # get sentiment
+    if TextBlob(tweet.tweet).sentiment.polarity > 0: out = "Positive"; pos_count += 1
+    else: out = "Negative"; neg_count += 1
+
+    print("["+ str(count) + "] " + tweet.tweet + "  :: " + out + "\n")
+
+    # add to list
+    l.append(tweet.tweet)
+    l.append(out)
+
+    # write to csv
+    wr.writerow(l)
+
+    # increment count
+    count += 1
 
 
 # enter to exit
