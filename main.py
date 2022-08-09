@@ -12,9 +12,12 @@ import twint, os, csv
 # clear screen
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
+# user
+user = "michaelreeves"
+
 # config
 c = twint.Config()
-c.Username = "michaelreeves"
+c.Username = user
 c.Store_object = True
 c.Hide_output = True
 c.Limit = 200
@@ -40,7 +43,7 @@ neg_count = 0
 with open('data.csv', 'x', encoding='UTF8') as f:
   # writer
   wr = csv.writer(f)
-  wr.writerow(["tweet", "sentiment"])
+  wr.writerow(["user", "tweet", "sentiment"])
 
   # loop through tweets
   for tweet in tweets:
@@ -54,6 +57,7 @@ with open('data.csv', 'x', encoding='UTF8') as f:
     print("["+ str(count) + "] " + tweet.tweet + "  :: " + out + "\n")
 
     # add to list
+    l.append(user)
     l.append(tweet.tweet)
     l.append(out)
 
